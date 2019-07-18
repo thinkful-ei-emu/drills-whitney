@@ -7,19 +7,21 @@ const { NODE_ENV } = require('./config');
 
 const app = express();
 
+//
 const morganOption = (NODE_ENV === 'production')
-  ? 'tiny'
-  : 'common';
+  ? 'common'
+  : 'dev';
 
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 
 app.get('/', (req, res) => {
-  res.send('Hello, boilerplate!');
+  res.send('Hello, world!');
 });
 
-app.use(function errorHandler(error, req, res, next) {
+//if 4 params, knows error is first; 2 or 3 params, knows req, res (next), need to have next despiten not using it (to equal 4)
+app.use(function errorHandler(error, req, res, next) { // eslint-disable-line no-unused-vars
   let response;
   if (NODE_ENV === 'production') {
     response = { error: { message: 'server error' } };
